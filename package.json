@@ -1,0 +1,21 @@
+{
+  "name": "ajajjat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:909back/JS-todo.git",
+  "author": "909back <909back@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/static": "^6.10.1",
+    "fastify": "^4.15.0",
+    "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.0",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "nodemon app.js"
+  }
+}
