@@ -17,24 +17,25 @@ export const html = (string, ...args) => String.raw({ raw: string }, args);
 export class Router {
     constructor(target) {
         _Router_target.set(this, null);
-        _Router_now.set(this, '/');
+        _Router_now.set(this, '');
         this.routes = [
             { link: '/', children: Home },
             { link: '/topic', children: Topic },
             { link: '/mypage', children: MyPage }
         ];
         __classPrivateFieldSet(this, _Router_target, target, "f");
-        const observer = new MutationObserver((mutationList) => { console.log(mutationList); });
-        const observerConfig = { attributes: true, childList: true, subtree: true, characterData: true, characterDataOldValue: true };
-        observer.observe(__classPrivateFieldGet(this, _Router_target, "f"), observerConfig);
+        // const observer = new MutationObserver((mutationList)=>{console.log(mutationList)})
+        // const observerConfig =  {attributes:true, childList:true, subtree:true, characterData:true, characterDataOldValue:true}
+        // observer.observe(this.#target,observerConfig)
     }
     go(link) {
         var _a, _b;
-        __classPrivateFieldSet(this, _Router_now, link, "f");
         if (__classPrivateFieldGet(this, _Router_target, "f")) {
+            __classPrivateFieldSet(this, _Router_now, link, "f");
             history.pushState(null, '', link);
             const findPage = (_a = this.routes.find(route => route.link === link)) === null || _a === void 0 ? void 0 : _a.children();
             (_b = __classPrivateFieldGet(this, _Router_target, "f")) === null || _b === void 0 ? void 0 : _b.replaceChildren(findPage);
+            this.toggleTabs();
         }
     }
     inital() {
@@ -44,6 +45,17 @@ export class Router {
             const link = e.currentTarget.dataset.link;
             this.go(link);
         }));
+    }
+    toggleTabs() {
+        const menus = document.querySelectorAll('.menu');
+        menus.forEach(menu => {
+            if (menu.dataset.link === __classPrivateFieldGet(this, _Router_now, "f")) {
+                menu.classList.add('active');
+            }
+            else if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
     }
 }
 _Router_target = new WeakMap(), _Router_now = new WeakMap();
